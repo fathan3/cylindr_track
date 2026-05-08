@@ -1,3 +1,112 @@
+import 'package:flutter/material.dart';
+
+class Mitra {
+  final String id;
+  final String nama;
+  final String lokasi;
+  final String nomorTelepon;
+  final String alamat;
+  final DateTime tanggalKerjasama;
+  DateTime? tanggalPengirimanTerakhir;
+  final bool aktif;
+
+  Mitra({
+    required this.id,
+    required this.nama,
+    required this.lokasi,
+    required this.nomorTelepon,
+    required this.alamat,
+    required this.tanggalKerjasama,
+    this.tanggalPengirimanTerakhir,
+    this.aktif = true,
+  });
+
+  int get hariTanpaPengiriman {
+    if (tanggalPengirimanTerakhir == null) {
+      return DateTime.now().difference(tanggalKerjasama).inDays;
+    }
+    return DateTime.now().difference(tanggalPengirimanTerakhir!).inDays;
+  }
+
+  bool get perluAlert => hariTanpaPengiriman >= 30;
+}
+
+class Pengiriman {
+  final String id;
+  final String nomorPengiriman;
+  final DateTime tanggal;
+  final String mitraId;
+  final String mitraNama;
+  final String lokasi;
+  final List<ItemPengiriman> items;
+  final String catatan;
+  final String status;
+
+  Pengiriman({
+    required this.id,
+    required this.nomorPengiriman,
+    required this.tanggal,
+    required this.mitraId,
+    required this.mitraNama,
+    required this.lokasi,
+    required this.items,
+    required this.catatan,
+    this.status = 'terkirim',
+  });
+}
+
+class ItemPengiriman {
+  final String produkId;
+  final String namaProduk;
+  final int jumlah;
+
+  ItemPengiriman({
+    required this.produkId,
+    required this.namaProduk,
+    required this.jumlah,
+  });
+}
+
+class StokMitra {
+  final String mitraId;
+  final String mitraNama;
+  final String produkId;
+  final String namaProduk;
+  final int stokTerpinjam;
+  final DateTime tanggalPengirimanTerakhir;
+
+  StokMitra({
+    required this.mitraId,
+    required this.mitraNama,
+    required this.produkId,
+    required this.namaProduk,
+    required this.stokTerpinjam,
+    required this.tanggalPengirimanTerakhir,
+  });
+}
+
+class EvaluasiRepurchasing {
+  final String id;
+  final String mitraId;
+  final String mitraNama;
+  final int hariTanpaPengiriman;
+  final DateTime tanggalAlert;
+  final String status;
+  final String? tindakan;
+  final DateTime? tanggalTindakan;
+
+  EvaluasiRepurchasing({
+    required this.id,
+    required this.mitraId,
+    required this.mitraNama,
+    required this.hariTanpaPengiriman,
+    required this.tanggalAlert,
+    this.status = 'belum_ditindak',
+    this.tindakan,
+    this.tanggalTindakan,
+  });
+}
+
 class Produk {
   final String id;
   final String nama;
